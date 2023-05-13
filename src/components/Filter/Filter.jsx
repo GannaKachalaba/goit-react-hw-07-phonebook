@@ -1,15 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {useDispatch, useSelector } from 'react-redux';
-import {choiceFilter} from 'redux/contactsSlice';
-import { getFilter } from 'redux/contactsSelectors';
+import { useDispatch } from 'react-redux';
+import { choiceFilter } from 'redux/Filter/filterSlice';
 import css from './Filter.module.css';
 
 function Filter() {
-  const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
-  const changesFilter = e => dispatch(choiceFilter(e.currentTarget.value));
+  const changesFilter = e => {
+    const value = e.currentTarget.value;
+    dispatch(choiceFilter(value));
+  };
 
   return (
     <label className={css.label}>
@@ -17,17 +17,11 @@ function Filter() {
       <input
         className={css.input}
         type="text"
-        value={filter}
-        onChange={ changesFilter}
+        name="filter"
+        onChange={changesFilter}
       />
     </label>
   );
-
 }
-
-Filter.prototype = {
-  filter: PropTypes.string.isRequired,
-  changeFilter: PropTypes.func.isRequired,
-};
 
 export default Filter;
